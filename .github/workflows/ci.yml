@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -33,6 +33,9 @@ jobs:
 
       - name: Run linting
         run: uv run ruff check . --output-format=github
+
+      - name: Apply formatting
+        run: uv run ruff format .
 
       - name: Check formatting
         run: uv run ruff format --check .
