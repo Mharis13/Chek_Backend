@@ -1,15 +1,12 @@
 from typing import Annotated
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from api.health._dto import HealthOutput
+from api.health.router import health_router
 from infrastructure.sql.engine import session_factory
-
-app = FastAPI(
-    title="Chek",
-    version="0.1.0",
-)
 
 
 async def get_db() -> AsyncSession:
@@ -24,11 +21,9 @@ async def check_db(db_session: AsyncSession) -> bool:
         return False
 
 
-@app.get("/health", tags=["health"])
-async def health_check(
+@health_router.get("/health")
+async def health(
     db_session: Annotated[AsyncSession, Depends(get_db)],
-) -> dict[str, str]:
-
+) -> HealthOutput:
     db_status = "ok" if await check_db(db_session=db_session) else "ko"
-
-    return {"api": "ok", "database": db_status}
+    return HealthOutput(api="ok", database=db_status)

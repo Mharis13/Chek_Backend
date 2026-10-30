@@ -4,9 +4,9 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
-engine: AsyncEngine = create_async_engine("sqlite+aiosqlite:///:memory", 
-                                          connect_args={"timeout": 30}
-                                          )
+engine: AsyncEngine = create_async_engine(
+    "sqlite+aiosqlite:///:memory", connect_args={"timeout": 30}
+)
 session_factory = async_sessionmaker(engine, expire_on_commit=False)
 
 
