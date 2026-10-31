@@ -5,6 +5,7 @@ description = "Daily Goal Tracker API"
 requires-python = ">=3.11"
 dependencies = [
     "aiosqlite>=0.22.1",
+    "alembic>=1.20.1",
     "fastapi[standard]>=0.115",
     "sqlalchemy[asyncio]>=2.1.6",
     "uvicorn[standard]>=0.30",
@@ -49,3 +50,27 @@ quote-style = "double"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+
+[tool.alembic]
+
+# path to migration scripts.
+script_location = "%(here)s/src/infrastructure/sql/alembic"
+
+# template used to generate migration file names; The default value is %%(rev)s_%%(slug)s
+ file_template = "%%(year)d_%%(month).2d_%%(day).2d_%%(hour).2d%%(minute).2d%%(second).2d-%%(rev)s_%%(slug)s"
+
+# additional paths to be prepended to sys.path. defaults to the current working directory.
+prepend_sys_path = [
+    "./src"
+]
+
+
+# version location specification; This defaults
+# to <script_location>/versions.  When using multiple version
+# directories, initial revisions must be specified with --version-path.
+# version_locations = [
+#    "%(here)s/alembic/versions",
+#    "%(here)s/foo/bar"
+# ]
+
