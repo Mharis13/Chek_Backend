@@ -10,7 +10,7 @@ engine: AsyncEngine = create_async_engine(
 session_factory = async_sessionmaker(engine, expire_on_commit=False)
 
 
-def get_db_engine(url: str | None) -> AsyncEngine:
+def get_db_engine(url: str | None = None) -> AsyncEngine:
     if url is None:
         return engine
 
